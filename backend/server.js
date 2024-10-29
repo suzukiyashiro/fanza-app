@@ -16,8 +16,8 @@ app.get("/", (req, res) => {
 // videoの投稿
 app.post("/api/video", async (req, res) => {
   try {
-    const { videoLink, videoName, dmmLink, genres } = req.body;
-    // const { videoHTML, videoName, dmmLink, genres } = req.body;
+    // const { videoLink, videoName, dmmLink, genres } = req.body;
+    const { videoHTML, videoName, dmmLink, genres } = req.body;
 
     /*
       src=" は、src属性の開始部分を示します。
@@ -25,8 +25,9 @@ app.post("/api/video", async (req, res) => {
       これにより、src属性の値（URL）が取得されます。
       最後の " は、src属性の終了部分を示します。
      */
-    // const srcRegex = /src="([^"]+)"/; // src="https://www.dmm.co.jp/litevideo/-/part/=/cid=sone00420/size=1280_720/"
-    // const videoLink = videoHTML.match(srcRegex);
+    const srcRegex = /src="([^"]+)"/; // src="https://www.dmm.co.jp/litevideo/-/part/=/cid=sone00420/size=1280_720/"
+    const match = videoHTML.match(srcRegex);
+    const videoLink = match[1]
 
     if (!videoLink) {
       return res.status(404).json({ err: "リンクがありません" });

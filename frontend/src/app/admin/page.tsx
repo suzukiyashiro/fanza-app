@@ -6,15 +6,10 @@ import React, { useEffect, useState } from "react";
 
 const Admin = () => {
   const [videos, setVideos] = useState<VideoType[]>([]);
-
-  useEffect(() => {
-    getVideos();
-  }, []);
-
-  const getVideos = async () => {
-    const res = await apiClient.get("/");
-    setVideos(res.data);
-  };
+  const [videoHTML, setVideoHTML] = useState<string>("");
+  const [videoName, setVideoName] = useState<string>("");
+  const [dmmLink, setDmmLink] = useState<string>("");
+  const [genres, setGenres] = useState<string>("");
 
   type VideoType = {
     id: number;
@@ -22,6 +17,32 @@ const Admin = () => {
     videoName: string;
     dmmLink: string;
     genres: string;
+  };
+
+  useEffect(() => {
+    getVideos();
+  }, []);
+
+  const getVideos = async () => {
+    try {
+      const res = await apiClient.get("/");
+      setVideos(res.data);
+    } catch (error) {
+      console.error({ err: error });
+    }
+  };
+
+  const handleAddVideo = async () => {
+    try {
+      await apiClient.post("/", {
+        videoHTML,
+        videoName,
+        dmmLink,
+        genres,
+      });
+    } catch (error) {
+      console.error({ err: error });
+    }
   };
 
   return (
@@ -37,27 +58,36 @@ const Admin = () => {
           placeholder="Video html"
           required
           className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          value={videoHTML}
+          onChange={(e) => setVideoHTML(e.target.value)}
         />
         <input
           type="text"
           placeholder="Video Name"
           required
           className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          value={videoName}
+          onChange={(e) => setVideoName(e.target.value)}
         />
         <input
           type="text"
           placeholder="Dmm Link"
           required
           className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          value={dmmLink}
+          onChange={(e) => setDmmLink(e.target.value)}
         />
         <input
           type="text"
           placeholder="Genre(s)"
           required
           className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          value={genres}
+          onChange={(e) => setGenres(e.target.value)}
         />
         <button
           type="submit"
+          onClick={handleAddVideo}
           className="w-full py-2 bg-blue-500 text-white font-semibold rounded-md hover:bg-blue-600 focus:outline-none"
         >
           動画を追加

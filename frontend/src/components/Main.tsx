@@ -12,8 +12,12 @@ const Main = () => {
   }, []);
 
   const getVideos = async () => {
-    const res = await apiClient.get("/");
-    setVideos(res.data);
+    try {
+      const res = await apiClient.get("/");
+      setVideos(res.data);
+    } catch (error) {
+      console.error({ err: error });
+    }
   };
 
   type VideoType = {
