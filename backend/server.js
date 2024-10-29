@@ -40,7 +40,7 @@ app.post("/api/video", async (req, res) => {
     });
     return res.status(201).json(newVideo);
   } catch (error) {
-    res.status(500).send(error.massage);
+    res.status(500).json({ err: error });
   }
 });
 
@@ -48,6 +48,16 @@ app.get("/api/video", async (req, res) => {
   try {
     const videos = await prisma.video.findMany();
     return res.status(200).json(videos);
+  } catch (error) {
+    res.status(500).json({ err: error });
+  }
+});
+
+app.delete("/api/video/:id", async (req, res) => {
+  try {
+    const { id } = req.params; // :idはstringとして扱われる
+    await prisma.video.delete({ where: { id: Number(id) } });
+    return res.status(200).json({ message: "動画を削除しました" });
   } catch (error) {
     res.status(500).json({ err: error });
   }
