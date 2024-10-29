@@ -44,4 +44,13 @@ app.post("/api/video", async (req, res) => {
   }
 });
 
+app.get("/api/video", async (req, res) => {
+  try {
+    const videos = await prisma.video.findMany();
+    return res.status(200).json(videos);
+  } catch (error) {
+    res.status(500).json({ err: error });
+  }
+});
+
 app.listen(PORT, console.log(`Server is running on http://localhost:${PORT}`));
