@@ -1,5 +1,6 @@
 "use client";
 
+import apiClient from "@/lib/apiClient";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 
@@ -7,8 +8,13 @@ const Main = () => {
   const [videos, setVideos] = useState<VideoType[]>([]);
 
   useEffect(() => {
-    setVideos(dammyVideos);
+   getVideos()
   }, []);
+
+  const getVideos = async () => {
+    const res = await apiClient.get('/')
+    console.log(res)
+  }
 
   const dammyVideos = [
     {
