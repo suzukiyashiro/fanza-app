@@ -40,6 +40,18 @@ const Admin = () => {
         dmmLink,
         genres,
       });
+      getVideos()
+    } catch (error) {
+      console.error({ err: error });
+    }
+  };
+
+  const handleDeleteVideo = async (id: number) => {
+    try {
+      if (window.confirm("本当に削除しますか？")) {
+        await apiClient.delete(`/${id}`);
+        getVideos()
+      }
     } catch (error) {
       console.error({ err: error });
     }
@@ -130,7 +142,7 @@ const Admin = () => {
               <td className="py-2 px-4">{video.videoName}</td>
               <td className="py-2 px-4">{video.genres}</td>
               <td className="py-2 px-4 flex space-x-2 justify-center">
-                <button>
+                <button onClick={() => handleDeleteVideo(video.id)}>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="16"
