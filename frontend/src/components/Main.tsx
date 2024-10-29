@@ -8,34 +8,13 @@ const Main = () => {
   const [videos, setVideos] = useState<VideoType[]>([]);
 
   useEffect(() => {
-   getVideos()
+    getVideos();
   }, []);
 
   const getVideos = async () => {
-    const res = await apiClient.get('/')
-    console.log(res)
-  }
-
-  const dammyVideos = [
-    {
-      id: 1,
-      videoLink:
-        "https://www.dmm.co.jp/litevideo/-/part/=/cid=sone00420/size=1280_720/",
-      videoName:
-        "出張先で軽蔑している中年セクハラ上司とまさかの相部屋に…朝まで続く絶倫性交に不覚にも感じてしまった純白マシュマロボディ新人社員水乃なのは",
-      dmmLink: "https://www.dmm.co.jp/litevideo/-/detail/=/cid=sone00420/",
-      genres: "OL 巨乳 寝取り・寝取られ・NTR ドラマ",
-    },
-    {
-      id: 2,
-      videoLink:
-        "https://www.dmm.co.jp/litevideo/-/part/=/cid=sone00420/size=1280_720/",
-      videoName:
-        "出張先で軽蔑している中年セクハラ上司とまさかの相部屋に…朝まで続く絶倫性交に不覚にも感じてしまった純白マシュマロボディ新人社員水乃なのは",
-      dmmLink: "https://www.dmm.co.jp/litevideo/-/detail/=/cid=sone00420/",
-      genres: "OL 巨乳 寝取り・寝取られ・NTR ドラマ",
-    },
-  ];
+    const res = await apiClient.get("/");
+    setVideos(res.data);
+  };
 
   type VideoType = {
     id: number;
