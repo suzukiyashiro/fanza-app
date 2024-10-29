@@ -1,34 +1,20 @@
 "use client";
 
+import apiClient from "@/lib/apiClient";
+import Link from "next/link";
 import React, { useEffect, useState } from "react";
 
 const Admin = () => {
   const [videos, setVideos] = useState<VideoType[]>([]);
 
   useEffect(() => {
-    setVideos(dammyVideos);
+    getVideos();
   }, []);
 
-  const dammyVideos = [
-    {
-      id: 1,
-      videoLink:
-        "https://www.dmm.co.jp/litevideo/-/part/=/cid=sone00420/size=1280_720/",
-      videoName:
-        "出張先で軽蔑している中年セクハラ上司とまさかの相部屋に…朝まで続く絶倫性交に不覚にも感じてしまった純白マシュマロボディ新人社員水乃なのは",
-      dmmLink: "https://www.dmm.co.jp/litevideo/-/detail/=/cid=sone00420/",
-      genres: "OL 巨乳 寝取り・寝取られ・NTR ドラマ",
-    },
-    {
-      id: 2,
-      videoLink:
-        "https://www.dmm.co.jp/litevideo/-/part/=/cid=sone00420/size=1280_720/",
-      videoName:
-        "出張先で軽蔑している中年セクハラ上司とまさかの相部屋に…朝まで続く絶倫性交に不覚にも感じてしまった純白マシュマロボディ新人社員水乃なのは",
-      dmmLink: "https://www.dmm.co.jp/litevideo/-/detail/=/cid=sone00420/",
-      genres: "OL 巨乳 寝取り・寝取られ・NTR ドラマ",
-    },
-  ];
+  const getVideos = async () => {
+    const res = await apiClient.get("/");
+    setVideos(res.data);
+  };
 
   type VideoType = {
     id: number;
@@ -37,14 +23,15 @@ const Admin = () => {
     dmmLink: string;
     genres: string;
   };
+
   return (
     <div className="p-6 mx-auto">
       <form className="space-y-4 bg-white shadow-lg rounded-lg p-6">
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-xl font-semibold text-gray-700">動画を追加</h2>
-          <a href="/" className="text-blue-500 hover:text-blue-700">
+          <Link href="/" className="text-blue-500 hover:text-blue-700">
             ホームに戻る
-          </a>
+          </Link>
         </div>
         <textarea
           placeholder="Video html"
@@ -124,7 +111,7 @@ const Admin = () => {
                   >
                     <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
                     <path
-                      fill-rule="evenodd"
+                      fillRule="evenodd"
                       d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"
                     />
                   </svg>
